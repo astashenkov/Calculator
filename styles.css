@@ -1,0 +1,56 @@
+body {
+    background-color: #000;
+}
+
+.main-container {
+    margin: 50px auto auto auto;
+    padding: 10px;
+    height: 308px;
+    width: 242px;
+    border: 1px solid #2a2e39;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* разместить контент в 4 колонках */
+    grid-template-rows: repeat(5, 1fr); /* разместить контент в 5 строках */
+    justify-items: center; /* выравнивание кнопок по горизонтальной линии */
+    align-items: center; /* выравнивание кнопок по вертикальной линии */
+}
+
+input {
+    background-color: #2a2e39;
+    color: #787b86;
+    border-radius: 5px;
+    border: 1px solid #2a2e39;
+    grid-column: span 4; /* занимает 4 позиции в гриде */
+    margin-bottom: 4px;
+    height: 36px;
+    width: 222px;
+    font-size: 25px;
+    outline: none; /* убирает выдиление при клике на поле ввода*/
+    text-align: right;
+}
+
+.button {
+    background-color: #000;
+    color: #787b86;
+    border: 1px solid #2a2e39;
+    border-radius: 10px;
+    text-align: center;
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+.sign {
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+    font-size: 30px;
+}
+
+.number {
+    height: 56px;
+    width: 56px;
+    font-size: 20px;
+}
