@@ -13,13 +13,15 @@ const multiply = document.querySelector('.multiply');
 const equals = document.querySelector('.equals');
 
 const statusCalc = {
-    coma: false,
-    value: '',
-    math: '',
-    new: false
+    coma: false,    // Запоминаем использовалась ли запятая при вводе значения
+    x: '',          // Значение первого ввод
+    y: '',          // Значение второго ввода / Результат вычислений
+    math: '',       // Знак арифметического действия
+    new: false      // Флаг false говорит о вводе первого значения; флаг true говорит о вводе второго значения
 }
 
 
+console.log('Calculator by Astashenkov Viacheslav');
 input.value = 0;
 
 numbers.forEach((item) => {
@@ -28,7 +30,7 @@ numbers.forEach((item) => {
             input.value = '';
             statusCalc.new = false;
         }
-        if (input.value.length < 12) {
+        if (input.value.length < 11) {
             if (input.value === '0') {
                 input.value = item.textContent;
             } else {
@@ -48,12 +50,12 @@ changeSign.addEventListener('click', () => {
 
 backSpase.addEventListener('click', () => {
     if (input.value.length === 1) {
-        if (input.value[0] === ',') {
+        if (input.value[0] === '.') {
             statusCalc.coma = false;
         }
         input.value = 0;
     } else {
-        if (input.value.substring(input.value.length - 1, input.value.length) === ',') {
+        if (input.value.substring(input.value.length - 1, input.value.length) === '.') {
             statusCalc.coma = false;
         }
         input.value = input.value.substring(0, input.value.length - 1);
@@ -61,61 +63,97 @@ backSpase.addEventListener('click', () => {
 });
 
 allClean.addEventListener('click', () => {
-    if (input.value.includes(',')) {
-        statusCalc.coma = false;
-    }
+    statusCalc.coma = false;
     input.value = 0;
-    statusCalc.value = '';
+    statusCalc.x = '';
+    statusCalc.y = '';
     statusCalc.math = '';
     statusCalc.new = false;
-    input.value = '';
 });
 
 coma.addEventListener('click', () => {
     if (statusCalc.coma === false) {
-        input.value = input.value + ',';
+        input.value = input.value + '.';
         statusCalc.coma = true;
     }
 });
 
 equals.addEventListener('click', () => {
+    statusCalc.coma = false;
+    statusCalc.new = true;
+    statusCalc.y = input.value;
     switch (statusCalc.math) {
         case '+': 
-            input.value = +(statusCalc.value) + +(input.value);
+            statusCalc.y = +statusCalc.x + +statusCalc.y;
+            input.value = statusCalc.y.toFixed(1);
+            statusCalc.x = '';
             break;
         case '-': 
-            input.value = Number(statusCalc.value) - Number(input.value);
-            break;
+            statusCalc.y = +statusCalc.x - +statusCalc.y;
+            input.value = statusCalc.y.toFixed(1);
+            statusCalc.x = '';
+        break;
         case '*': 
-            input.value = Number(statusCalc.value) * Number(input.value);
+            statusCalc.y = +statusCalc.x * +statusCalc.y;
+            input.value = statusCalc.y.toFixed(1);
+            statusCalc.x = '';
             break;
         case '/': 
-            input.value = Number(statusCalc.value) / Number(input.value);
+            statusCalc.y = +statusCalc.x / +statusCalc.y;
+            input.value = statusCalc.y.toFixed(1);
+            statusCalc.x = '';
             break;
     }
-    statusCalc.new = true;
 });
 
 plus.addEventListener('click', () => {
     statusCalc.new = true;
     statusCalc.coma = false;
-    if (statusCalc.value) {
-        input.value = Number(statusCalc.value) + Number(input.value);
-        statusCalc.value = input.value;
+    statusCalc.math = '+';
+    if (statusCalc.x) {
+        statusCalc.y = input.value;
+        statusCalc.x = +(statusCalc.x) + +(statusCalc.y);
+        input.value = statusCalc.x.toFixed(1);
     } else {
-        statusCalc.value = input.value;
-        statusCalc.math = '+';
+        statusCalc.x = input.value;
     }
 });
 
 minus.addEventListener('click', () => {
     statusCalc.new = true;
     statusCalc.coma = false;
-    if (statusCalc.value) {
-        input.value = Number(statusCalc.value) - Number(input.value);
-        statusCalc.value = input.value;
+    statusCalc.math = '-';
+    if (statusCalc.x) {
+        statusCalc.y = input.value;
+        statusCalc.x = +(statusCalc.x) - +(statusCalc.y);
+        input.value = statusCalc.x.toFixed(1);  
     } else {
-        statusCalc.value = input.value;
-        statusCalc.math = '-';
+        statusCalc.x = input.value;
+    }
+});
+
+multiply.addEventListener('click', () => {
+    statusCalc.new = true;
+    statusCalc.coma = false;
+    statusCalc.math = '*';
+    if (statusCalc.x) {
+        statusCalc.y = input.value;
+        statusCalc.x = +(statusCalc.x) * +(statusCalc.y);
+        input.value = statusCalc.x.toFixed(1);
+    } else {
+        statusCalc.x = input.value;
+    }
+});
+
+divide.addEventListener('click', () => {
+    statusCalc.new = true;
+    statusCalc.coma = false;
+    statusCalc.math = '/';
+    if (statusCalc.x) {
+        statusCalc.y = input.value;
+        statusCalc.x = +(statusCalc.x) / +(statusCalc.y);
+        input.value = statusCalc.x.toFixed(1);  
+    } else {
+        statusCalc.x = input.value;
     }
 });
