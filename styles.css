@@ -31,6 +31,9 @@ input {
 }
 
 .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #000;
     color: #787b86;
     border: 1px solid #2a2e39;
